@@ -8,41 +8,52 @@ class App extends Component {
          {name: 'Arpan', age: '33'},
          {name: 'Aryana', age: '3'},
          {name: 'Pratima', age: '30'},
-     ]
+     ],
+        showPerson: false
     }
 
-    switchNameHandler = () => {
-        this.setState({
-            person:[
-                {name: 'Arpan!!!', age: '333'},
-                {name: 'Aryana', age: '3'},
-                {name: 'Pratima', age: '30'},
-            ]
-        })
+    deletePersonHandler = (personIndex) => {
+        console.log(personIndex)
+        const persons = this.state.person
+        persons.splice(personIndex, 1)
+        this.setState({person: persons})
+    }
 
+    togglePersonHandler = () => {
+        let doesShow = this.state.showPerson
+        this.setState({
+            showPerson: !doesShow
+        })
     }
 
   render() {
+      let persons = null
+
+      if ( this.state.showPerson) {
+          persons = (
+              <div>
+                  {this.state.person.map((p, index) => {
+                      return(
+                          <Person
+                              click = {() => this.deletePersonHandler(index)}
+                              name  = {p.name}
+                              age   = {p.age}
+                          />
+                      )
+
+                  })}
+              </div>
+          )
+      }
     return (
       <div className="App">
           <h1>First react app</h1>
           <h1>Can only be nested in side root element ~> div here</h1>
-          <button onClick={this.switchNameHandler}>Switch Name!</button>
-          <Person
-              click = {this.switchNameHandler}
-              name = {this.state.person[0].name}
-              age = {this.state.person[0].age}/>
-          <Person
-              name = {this.state.person[1].name}
-              age = {this.state.person[1].age}>
-              My hobby is: troubling daddy
-          </Person>
-          <Person
-              name = {this.state.person[2].name}
-              age = {this.state.person[2].age}/>
+          <button onClick={this.togglePersonHandler}>Toggle Person</button>
+          {persons}
       </div>
     )
-  }
+}
 }
 
 export default App;
