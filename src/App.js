@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import classes from './App.css';
 import Person from './Person/Person';
 
 class App extends Component {
@@ -28,14 +28,8 @@ class App extends Component {
 
   render() {
 
-        const style = {
-            backgroundColor: 'green',
-            font: 'inherit',
-            border: '1px solid blue',
-            padding: '8px',
-            cursor: 'pointer'
-        }
       let persons = null
+      let btnClass = ''
 
       if ( this.state.showPerson) {
           persons = (
@@ -52,27 +46,25 @@ class App extends Component {
                   })}
               </div>
           )
-          style.backgroundColor = 'red'
-          style[':hover'] = {
-              backgroundColor: 'purple',
-              color: 'white'
-          }
+
+          btnClass = classes.Red
       }
 
-      let classes = []
+      const AssignedClasses = []
       if (this.state.person.length <= 2) {
-          classes.push('red')
+          AssignedClasses.push(classes.red)
       }
 
       if (this.state.person.length <= 1) {
-            classes.push('bold')
+          AssignedClasses.push(classes.bold)
       }
     return (
-      <div className="App">
+      <div className={classes.App}>
           <h1>First react app</h1>
-          <p className={classes.join(' ')} >Can only be nested in side root element ~> div here</p>
-          <button style={style}
-              onClick={this.togglePersonHandler}>
+          <p className={AssignedClasses.join(' ')} >Can only be nested in side root element ~> div here</p>
+          <button
+              className = {btnClass}
+              onClick   = {this.togglePersonHandler}>
               Toggle Person
           </button>
           {persons}
